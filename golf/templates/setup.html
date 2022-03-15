@@ -7,8 +7,11 @@ Set-up
     <div class="container">
         <h1> Set-up a game</h1>
         <br>
-        <h3> Fill out the set-up fields to start a game:</h3>
         <form method="POST" class="form-register" style="color: orange">
+            {{ form.hidden_tag()}}
+
+            <h3> Fill out the set-up fields to start a game:</h3>
+
             {{ form.host_name.label() }}
             {{ form.host_name(class="form-control", placeholder="Host Name") }}
             {{ form.num_holes.label() }}
