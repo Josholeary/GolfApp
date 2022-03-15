@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+  <!-- Base.html is the base bootstrap sheet with some styling from which all pages will pull from using jinja -->
    <head>
       <!-- Required meta tags -->
       <meta charset="utf-8">
@@ -46,10 +47,33 @@
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
    </body>
+   <div class="container, mt-10">
+   <footer>
+    <p>Author: Josh O'Leary</p>
+    <p><a href="https://github.com/Josholeary">GitHub</a></p>
+  </footer> 
+  </div>
    <style>
       body {
       background-color: #242526;
       color: #f5f5f5
+      }
+      p{
+        padding: 0.5%;
+      }
+      h1{
+        text-decoration:overline;
+      }
+      h5{
+        color: yellowgreen;
+        text-decoration: underline;
+      }
+      h6{
+        color: yellowgreen;
+      }
+      footer{
+        text-align: center;
+        padding-top: 15%;
       }
    </style>
 </html>
