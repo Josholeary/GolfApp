@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+Set-up
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1> Set-up a game</h1>
+        <br>
+        <h3> Fill out the set-up fields to start a game:</h3>
+        <form method="POST" class="form-register" style="color: orange">
+            {{ form.host_name.label() }}
+            {{ form.host_name(class="form-control", placeholder="Host Name") }}
+            {{ form.num_holes.label() }}
+            {{ form.num_holes(class="form-control", placeholder=18) }}
+            {{ form.session_password.label() }}
+            {{ form.session_password(class="form-control", placeholder="Session Password") }}
+            <br>
+            {{ form.submit(class="btn-lg btn-block btn-primary") }}
+        </form>
+    </div>
+{% endblock %}
+
