@@ -21,6 +21,7 @@ class scorecard(db.Model):
     hole_num = db.Column(db.Integer(), nullable=False)
     score = db.Column(db.Integer(), nullable=False)
     player_name = db.Column(db.String(), db.ForeignKey('player.player_name'))
+    overall = db.Column(db.Integer(), nullable=False)
 
     def __repr__(self):
         return f'item {self.name}'

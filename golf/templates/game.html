@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+Game
+{% endblock %}
+
+{% block content %}
+   <h1>Scorecard</h1>
+
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Hole</th>
+                <th scope="col">Score</th>
+                <th scope="col">Overall</th>
+            </tr>
+        </thead>
+    <tbody>
+        {% for score in scorecard %}
+        <tr>
+                <td>{{ scorecards.player_name }}</td>
+                <td> {{ scorecards.hole_num }} </td>
+                <td> {{ scorecards.score }} </td>
+                <td> {{ scorecards.overall}} </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+    </table>
+
+{% endblock %}

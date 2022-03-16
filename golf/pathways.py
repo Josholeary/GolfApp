@@ -3,7 +3,7 @@ from wsgiref import validate
 #pathways controls all routes to the different pages in the web app
 from golf import app
 from flask import render_template, redirect, url_for, flash, get_flashed_messages
-from golf.dbmodels import setup, player
+from golf.dbmodels import setup, player, scorecard
 from golf.forms import SetupForm,JoinForm
 from golf import db
 
@@ -23,7 +23,7 @@ def setup_page():
                                  session_password=form.session_password.data)
         db.session.add(setup_to_create)
         db.session.commit
-        #return redirect(url_for('game'))
+        return redirect(url_for('game_page'))
     if form.errors != {}:
         for errors in form.errors.values():
             flash(f'Error: {errors}')
@@ -39,4 +39,10 @@ def join_page():
                                  session_password=form.session_password.data)
         db.session.add(setup_to_create)
         db.session.commit
+        return redirect(url_for('game_page'))
     return render_template('join.html', form=form)
+
+@app.route('/game')
+def game_page():
+    scorecards = scorecard.query.all()
+    return render_template('game.html', scorecards=scorecards)
