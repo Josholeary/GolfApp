@@ -8,5 +8,19 @@ Join a game
 
       <h1> Join a game in progress</h1>
         <br>
+      <form method="POST" class="form-register" style="color: orange">
+          {{ form.hidden_tag()}}
+
+          <h3> Fill out below and join a game in progress</h3>
+
+          {{ form.host_name.label() }}
+          {{ form.host_name(class="form-control", placeholder="Host Name") }}
+          {{ form.player_name.label() }}
+          {{ form.player_name(class="form-control", placeholder="Player Name") }}
+          {{ form.session_password.label() }}
+          {{ form.session_password(class="form-control", placeholder="Session Password") }}
+          <br>
+          {{ form.submit(class="btn-lg btn-block btn-warning") }}
+      </form>
   </div>
 {% endblock %}

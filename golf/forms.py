@@ -13,6 +13,6 @@ class SetupForm(FlaskForm):
 #form for joining a game
 class JoinForm(FlaskForm):
     host_name = StringField(label='Host name:')
-    player_name = StringField(label='player name:')
+    player_name = StringField(label='Player name:')
     session_password = PasswordField(label='Enter the Session Password:')
     submit = SubmitField(label='Begin Game')

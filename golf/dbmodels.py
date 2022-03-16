@@ -9,7 +9,6 @@ class setup(db.Model):
     host_name = db.Column(db.String(length=40), nullable=False)
     num_holes = db.Column(db.Integer(), nullable=False)
     session_password = db.Column(db.String(length=20), nullable=False, unique=True)
-    players = db.relationship('player', backref='joined_game', lazy=True)
 
 #player database model for every player in a game
 class player(db.Model):

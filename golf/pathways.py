@@ -2,9 +2,9 @@ from crypt import methods
 from wsgiref import validate
 #pathways controls all routes to the different pages in the web app
 from golf import app
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash, get_flashed_messages
 from golf.dbmodels import setup, player
-from golf.forms import SetupForm
+from golf.forms import SetupForm,JoinForm
 from golf import db
 
 #Homepage route
@@ -26,10 +26,17 @@ def setup_page():
         #return redirect(url_for('game'))
     if form.errors != {}:
         for errors in form.errors.values():
-            print(f'Error: {errors}')
+            flash(f'Error: {errors}')
     return render_template('setup.html', form=form)
 
 #Join game route
 @app.route('/join')
 def join_page():
-    return render_template('join.html')
+    form = JoinForm()
+    if form.validate_on_submit():
+        setup_to_create = setup(host_name=form.host_name.data,
+                                 player_name=form.player_name.data,
+                                 session_password=form.session_password.data)
+        db.session.add(setup_to_create)
+        db.session.commit
+    return render_template('join.html', form=form)
