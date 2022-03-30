@@ -17,12 +17,14 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
+    from .dbmodels import setgame, player
+
     create_database(app)
 
     return app
 
 def create_database(app):
-    if not path.exists('golf/' + DB_NAME):
+    if not path.exists('/golf/' + DB_NAME):
         db.create_all(app=app)
         print('Created Database!')
 

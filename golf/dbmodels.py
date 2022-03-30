@@ -5,8 +5,8 @@ from flask_login import UserMixin
 #Setup database model for setting up a game
 class setgame(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
-    num_holes = db.Column(db.Integer, nullable=False)
-    session_password = db.Column(db.String(length=20), nullable=False, unique=True)
+    numholes = db.Column(db.Integer, nullable=False)
+    spass = db.Column(db.String(length=20), nullable=False)
     players = db.relationship('player')
 
 #player database model for every player in a game

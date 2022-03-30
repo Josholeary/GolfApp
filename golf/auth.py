@@ -1,11 +1,12 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, redirect, render_template, request, flash, jsonify, url_for
+from .dbmodels import setgame
+from . import db
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/setup', methods=['GET', 'POST'])
 def setup():
     if request.method == 'POST':
-        hostname = request.form.get('hostname')
         numholes = int(request.form.get('numholes'))
         spass = request.form.get('spass')
     
@@ -14,7 +15,12 @@ def setup():
         elif len(spass) < 4:
             flash('Password must be greater than 4 characters', category='error')
         else:
-            return render_template('game.html')
+            newgame = setgame(numholes=numholes, spass=spass)
+            db.session.add(newgame)
+            db.session.commit()
+            flash('Game created', category='success')
+            return redirect(url_for('views.homepage'))
+        
 
     return render_template('setup.html')
 
