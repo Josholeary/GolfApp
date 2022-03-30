@@ -22,6 +22,3 @@ def setup():
 def join_page():
     return render_template('join.html')
 
-@auth.route('/game')
-def game_page():
-    return render_template('game.html')

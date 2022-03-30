@@ -1,22 +1,21 @@
-from enum import unique
 #dbmodels holds all the classes that create the database models for the site
-from golf import db
-from enum import unique
+from . import db
 from flask_login import UserMixin
 
 #Setup database model for setting up a game
-class setup(db.Model, UserMixin):
+class setgame(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
-    host_name = db.Column(db.String(length=40), nullable=False)
-    num_holes = db.Column(db.Integer(), nullable=False)
+    num_holes = db.Column(db.Integer, nullable=False)
     session_password = db.Column(db.String(length=20), nullable=False, unique=True)
+    players = db.relationship('player')
 
 #player database model for every player in a game
 class player(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
-    player_name = db.Column(db.String(length=40), nullable=False)
-    hole_num = db.Column(db.Integer(), nullable=False)
-    score = db.Column(db.Integer(), nullable=False)
+    pname = db.Column(db.String(length=40), nullable=False)
+    hole_num = db.Column(db.Integer, nullable=False)
+    score = db.Column(db.Integer, nullable=False)
+    game_id = db.Column(db.Integer, db.ForeignKey('setgame.id'))
 
 
     def __repr__(self):
