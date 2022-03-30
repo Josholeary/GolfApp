@@ -9,18 +9,28 @@ Join a game
       <h1> Join a game in progress</h1>
         <br>
       <form method="POST" class="form-register" style="color: orange">
-          {{ form.hidden_tag()}}
-
           <h3> Fill out below and join a game in progress</h3>
-
-          {{ form.host_name.label() }}
-          {{ form.host_name(class="form-control", placeholder="Host Name") }}
-          {{ form.player_name.label() }}
-          {{ form.player_name(class="form-control", placeholder="Player Name") }}
-          {{ form.session_password.label() }}
-          {{ form.session_password(class="form-control", placeholder="Session Password") }}
-          <br>
-          {{ form.submit(class="btn-lg btn-block btn-warning") }}
+          <div class="form-group">
+            <label for="pname">Player Name:</label>
+            <input
+            type="pname"
+            class="form-control"
+            id="text"
+            name="pname"
+            placeholder="Enter Player Name"
+            />
+          </div>
+          <div class="form-group">
+                <label for="spass">Session Password:</label>
+                <input
+                type="password"
+                class="form-control"
+                id="spass"
+                name="spass"
+                placeholder="Enter password"
+                />
+          </div>
+          <button type="submit" class="btn btn-block btn-warning">Join Game</button>
       </form>
   </div>
 {% endblock %}

@@ -2,9 +2,8 @@ from crypt import methods
 from wsgiref import validate
 #pathways controls all routes to the different pages in the web app
 from golf import app
-from flask import render_template, redirect, url_for, flash, get_flashed_messages
-from golf.dbmodels import setup, player, scorecard
-from golf.forms import SetupForm,JoinForm
+from flask import render_template, redirect, url_for, flash, get_flashed_messages, request
+from golf.dbmodels import setup, player
 from golf import db
 
 #Homepage route
@@ -16,33 +15,25 @@ def index():
 #Set up game route
 @app.route('/setup', methods=['GET','POST'])
 def setup_page():
-    form = SetupForm()
-    if form.validate_on_submit():
-        setup_to_create = setup(host_name=form.host_name.data,
-                                 num_holes=form.num_holes.data,
-                                 session_password=form.session_password.data)
-        db.session.add(setup_to_create)
-        db.session.commit
-        return redirect(url_for('game_page'))
-    if form.errors != {}:
-        for errors in form.errors.values():
-            flash(f'Error: {errors}')
-    return render_template('setup.html', form=form)
+    if request.method == 'POST':
+        hostname = request.form.get('hostname')
+        numholes = int(request.form.get('numholes'))
+        spass = request.form.get('spass')
+        
+        if numholes > 18:
+            flash('Maximum of 18 holes per course', category='error')
+        elif len(spass) < 4:
+            flash('Password must be greater than 4 characters', category='error')
+        else:
+            return render_template('game.html')
+
+    return render_template('setup.html')
 
 #Join game route
-@app.route('/join')
+@app.route('/join', methods=['GET','POST'])
 def join_page():
-    form = JoinForm()
-    if form.validate_on_submit():
-        setup_to_create = setup(host_name=form.host_name.data,
-                                 player_name=form.player_name.data,
-                                 session_password=form.session_password.data)
-        db.session.add(setup_to_create)
-        db.session.commit
-        return redirect(url_for('game_page'))
-    return render_template('join.html', form=form)
+    return render_template('join.html')
 
 @app.route('/game')
 def game_page():
-    scorecards = scorecard.query.all()
-    return render_template('game.html', scorecards=scorecards)
+    return render_template('game.html')

@@ -8,18 +8,38 @@ Set-up
         <h1> Set-up a game</h1>
         <br>
         <form method="POST" class="form-register" style="color: yellowgreen">
-            {{ form.hidden_tag()}}
-
-            <h3> Fill out below and start hosting the scorecards and leaderboard</h3>
-
-            {{ form.host_name.label() }}
-            {{ form.host_name(class="form-control", placeholder="Host Name") }}
-            {{ form.num_holes.label() }}
-            {{ form.num_holes(class="form-control", placeholder=18) }}
-            {{ form.session_password.label() }}
-            {{ form.session_password(class="form-control", placeholder="Session Password") }}
-            <br>
-            {{ form.submit(class="btn-lg btn-block btn-primary") }}
+        <h3> Fill out below and start hosting the scorecards and leaderboard</h3>
+        <div class="form-group">
+        <label for="hostname">Host Name:</label>
+        <input
+        type="hostname"
+        class="form-control"
+        id="text"
+        name="hostname"
+        placeholder="Enter Host Name"
+        />
+        </div>
+        <div class="form-group">
+            <label for="numholes">Number of holes:</label>
+            <input
+            type="number"
+            class="form-control"
+            id="numholes"
+            name="numholes"
+            placeholder=18
+            />
+        </div>
+        <div class="form-group">
+            <label for="spass">Session Password:</label>
+            <input
+            type="password"
+            class="form-control"
+            id="spass"
+            name="spass"
+            placeholder="Set password"
+            />
+        </div>
+        <button type="submit" class="btn btn-block btn-primary">Start Game</button>
         </form>
     </div>
 {% endblock %}
