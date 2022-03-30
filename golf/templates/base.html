@@ -38,10 +38,10 @@
         {% if messages %}
           {% for category, i in messages %}
             <div class="alert alert-danger alert-dismissable fade show">
+              {{ i }}
               <button type="button" class="close" data-dismiss="alert">
                 <span aria-hidden="true">&times;</span>
               </button>
-              {{ i }}
             </div>
           {% endfor %}
         {% endif %}

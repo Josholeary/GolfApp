@@ -1,11 +1,28 @@
-from enum import unique
-from flask import Flask, render_template
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import PrimaryKeyConstraint
+from os import path
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///golf.db'
-app.config['SECRET_KEY'] = '1344dfa0b97b2fdbf50f85d7'
-db=SQLAlchemy(app)
+db=SQLAlchemy()
+DB_NAME = 'database.db'
 
-from golf import pathways
+def create_app():
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = '1344dfa0b97b2fdbf50f85d7'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    db.init_app(app)
+
+    from .views import views
+    from .auth import auth
+
+    app.register_blueprint(views, url_prefix='/')
+    app.register_blueprint(auth, url_prefix='/')
+
+    create_database(app)
+
+    return app
+
+def create_database(app):
+    if not path.exists('golf/' + DB_NAME):
+        db.create_all(app=app)
+        print('Created Database!')
+
