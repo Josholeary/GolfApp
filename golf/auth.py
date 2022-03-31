@@ -1,12 +1,16 @@
+from hashlib import sha256
+from nis import cat
 from flask import Blueprint, redirect, render_template, request, flash, jsonify, url_for
-from .dbmodels import setgame
+from .dbmodels import setgame,player
 from . import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/setup', methods=['GET', 'POST'])
 def setup():
     if request.method == 'POST':
+        gamename = request.form.get('gamename')
         numholes = int(request.form.get('numholes'))
         spass = request.form.get('spass')
     
@@ -15,16 +19,37 @@ def setup():
         elif len(spass) < 4:
             flash('Password must be greater than 4 characters', category='error')
         else:
-            newgame = setgame(numholes=numholes, spass=spass)
+            newgame = setgame(gamename = gamename, numholes=numholes, spass=generate_password_hash(spass, method='sha256'))
             db.session.add(newgame)
             db.session.commit()
-            flash('Game created', category='success')
-            return redirect(url_for('views.homepage'))
+            flash('Game created, join using session password', category='success')
+            return redirect(url_for('auth.join_page'))
         
 
     return render_template('setup.html')
 
 @auth.route('/join', methods=['GET', 'POST'])
 def join_page():
+    if request.method == 'POST':
+        pname = request.form.get('pname')
+        gamename = request.form.get('gamename')
+        spass = request.form.get('spass')
+
+        gameip = setgame.query.filter_by(gamename=gamename).first()
+        if gameip:
+            if check_password_hash(gameip.spass, spass):
+                flash('Joined game', category='success')
+                newplayer = player(pname=pname)
+                db.session.add(newplayer)
+                db.session.commit()
+                return redirect(url_for('auth.game_page'))
+            else:
+                flash('Incorrect password', category='error')
+        else:
+            flash('Game name does not exist', category='error')
     return render_template('join.html')
+
+@auth.route('/game')
+def game_page():
+    return render_template('game.html')
 

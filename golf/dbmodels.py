@@ -5,6 +5,7 @@ from flask_login import UserMixin
 #Setup database model for setting up a game
 class setgame(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
+    gamename = db.Column(db.String(length=20), nullable=False)
     numholes = db.Column(db.Integer, nullable=False)
     spass = db.Column(db.String(length=20), nullable=False)
     players = db.relationship('player')
@@ -12,9 +13,9 @@ class setgame(db.Model, UserMixin):
 #player database model for every player in a game
 class player(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
-    pname = db.Column(db.String(length=40), nullable=False)
-    hole_num = db.Column(db.Integer, nullable=False)
-    score = db.Column(db.Integer, nullable=False)
+    pname = db.Column(db.String(length=40))
+    hole_num = db.Column(db.Integer)
+    score = db.Column(db.Integer)
     game_id = db.Column(db.Integer, db.ForeignKey('setgame.id'))
 
 
