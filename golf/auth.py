@@ -1,5 +1,6 @@
 from hashlib import sha256
 from nis import cat
+from operator import methodcaller
 from flask import Blueprint, redirect, render_template, request, flash, jsonify, url_for
 from .dbmodels import setgame,player
 from . import db
@@ -49,7 +50,8 @@ def join_page():
             flash('Game name does not exist', category='error')
     return render_template('join.html')
 
-@auth.route('/game')
+@auth.route('/game', methods=['GET', 'POST'])
 def game_page():
-    return render_template('game.html')
+    players = player.query.all()
+    return render_template('game.html', players=players)
 

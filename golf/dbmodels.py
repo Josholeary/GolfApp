@@ -14,7 +14,7 @@ class setgame(db.Model, UserMixin):
 class player(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
     pname = db.Column(db.String(length=40))
-    hole_num = db.Column(db.Integer)
+    holenum = db.Column(db.Integer)
     score = db.Column(db.Integer)
     game_id = db.Column(db.Integer, db.ForeignKey('setgame.id'))
 
