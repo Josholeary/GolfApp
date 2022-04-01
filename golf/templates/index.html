@@ -6,24 +6,32 @@ Home
 {% block content %}
   <div class="container">
 
-      <h1> Welcome to Golf Score Tracker</h1>
+      <h1> Homepage </h1>
       <br>
-      <h5> About: </h5>
+      <h2> About: </h2>
       <p> This app allows players to come together and set up a scorecard which they can all join to track their scores across the course. 
-        Once set-up a user can input their scores on each hole and see other users on a live leaderboard including what they got on each hole.</p>
+        Once set-up a user can input their scores on each hole and see other users on a live leaderboard including what hole they are on and their current score.</p>
       <br>
   </div>
-  <div class="container">
-  <img src="https://images.pond5.com/cinematic-male-golfer-sunset-slow-footage-095206990_iconl.jpeg" class="rounded mx-auto d-block" alt="Golf ball going into hole">
-  </div>
+  <img src="https://www.justaballhop.ie/wp-content/uploads/2016/02/large-open-air-course-with-golf-stick-and-ball-web-header.jpg" class="rounded mx-auto d-block" alt="Golf club">
   <br>
-  <div class="container">
-    <h5>How to use:</h5>
+    <h2> How to use:</h2>
     <br>
-    <h6>Host a game</h6>
-    <p>Go to the "Setup a new game" page and enter your desired name, the number of holes the group intends to play and the password you want to set for the game, 
-      other players can then search for your name and enter the password in order to start tracking their scores.</p>
-    <h6>Join a game</h6>
-    <p>Go to the "Join a game" page enter the hosts name, your name for the scorecard and the session password and see scores from around the course.</p>
-  </div>
+    <div class="row">
+      <div class="col">
+          <div class="card text-dark bg-muted">
+            <h5>Host a game</h5>
+            <p>To set-up a game, give your game session a name, enter the number of holes you wish to play and set a password. 
+              Other players can then enter the name and password in order to start tracking their scores.</p>
+            <a href="setup" class="btn btn-block btn-success">Get started hosting</a>
+          </div>
+      </div>
+      <div class="col">
+        <div class="card text-dark bg-muted">
+          <h5>Join a game</h5>
+          <p>To join a game enter the name that will be linked to your score card, the game session name and the session password and begin inputting your own scores on every hole number as well as seeing scores from around the course.</p>
+          <a href="join" class="btn btn-block btn-warning">Join an existing game</a>
+        </div>
+      </div>
+    </div>
 {% endblock %}
