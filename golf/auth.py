@@ -52,6 +52,29 @@ def join_page():
 
 @auth.route('/game', methods=['GET', 'POST'])
 def game_page():
+    if request.method == 'POST':
+        pname = request.form.get('pname')
+        holenum = int(request.form.get('holenum'))
+        newscore = int(request.form.get('score'))
+
+        p_exists = player.query.filter_by(pname=pname).first()
+        if p_exists:
+            if not p_exists.score:
+                p_exists.holenum = holenum
+                p_exists.score = newscore
+                db.session.commit()
+            else:
+                overall = newscore + p_exists.score
+                p_exists.holenum = holenum
+                p_exists.score = overall
+                db.session.commit()
+        else:
+            flash('Player name not in session', category='error')
+
+
+            
+            
+
     players = player.query.all()
     return render_template('game.html', players=players)
 
