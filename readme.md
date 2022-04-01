@@ -18,11 +18,11 @@ This web app built using the python 'flask' web framework acts as a group scorec
 
 ### Setup Page
 
-![Setup](ss/Setup.png)
+![Setup](ss/setup.png)
 
 ### Join Page
 
-![Join](ss/Join.png)
+![Join](ss/join.png)
 
 ## Game Page
 
