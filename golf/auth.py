@@ -61,7 +61,7 @@ def game_page():
         holenum = int(request.form.get('holenum'))
         newscore = int(request.form.get('score'))
 
-        p_exists = User.query.filter_by(pname=pname).first()
+        p_exists = User.query.filter_by(id=current_user.id).first()
         if p_exists:
             if not p_exists.score:
                 p_exists.holenum = holenum
