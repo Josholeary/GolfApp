@@ -1,10 +1,12 @@
+from crypt import methods
 from hashlib import sha256
 from nis import cat
 from operator import methodcaller
 from flask import Blueprint, redirect, render_template, request, flash, jsonify, url_for
-from .dbmodels import setgame,player
+from .dbmodels import setgame,User
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, login_required, logout_user, current_user
 
 auth = Blueprint('auth', __name__)
 
@@ -40,9 +42,10 @@ def join_page():
         if gameip:
             if check_password_hash(gameip.spass, spass):
                 flash('Joined game', category='success')
-                newplayer = player(pname=pname)
+                newplayer = User(pname=pname)
                 db.session.add(newplayer)
                 db.session.commit()
+                login_user(newplayer, remember=True)
                 return redirect(url_for('auth.game_page'))
             else:
                 flash('Incorrect password', category='error')
@@ -51,13 +54,14 @@ def join_page():
     return render_template('join.html')
 
 @auth.route('/game', methods=['GET', 'POST'])
+@login_required
 def game_page():
     if request.method == 'POST':
         pname = request.form.get('pname')
         holenum = int(request.form.get('holenum'))
         newscore = int(request.form.get('score'))
 
-        p_exists = player.query.filter_by(pname=pname).first()
+        p_exists = User.query.filter_by(pname=pname).first()
         if p_exists:
             if not p_exists.score:
                 p_exists.holenum = holenum
@@ -71,10 +75,18 @@ def game_page():
         else:
             flash('Player name not in session', category='error')
 
-
-            
-            
-
-    players = player.query.all()
+    players = User.query.all()
     return render_template('game.html', players=players)
+
+@auth.route('/leave')
+@login_required
+def leave_game():
+    logout_user()
+    return redirect(url_for('auth.join_page'))
+
+@auth.route('/delete')
+@login_required
+def delete_game():
+    return redirect(url_for('views.homepage'))
+    
 
