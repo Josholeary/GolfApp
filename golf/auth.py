@@ -14,15 +14,16 @@ auth = Blueprint('auth', __name__)
 def setup():
     if request.method == 'POST':
         gamename = request.form.get('gamename')
-        numholes = int(request.form.get('numholes'))
+        numholes = request.form.get('numholes')
         spass = request.form.get('spass')
     
-        if numholes > 18:
-            flash('Maximum of 18 holes per course', category='error')
+        if len(gamename) < 4:
+            flash('Game name must be greater than 4 characters', category='error')
         elif len(spass) < 4:
             flash('Password must be greater than 4 characters', category='error')
         else:
-            newgame = setgame(gamename = gamename, numholes=numholes, spass=generate_password_hash(spass, method='sha256'))
+            inh = int(numholes)
+            newgame = setgame(gamename = gamename, numholes=inh, spass=generate_password_hash(spass, method='sha256'))
             db.session.add(newgame)
             db.session.commit()
             flash('Game created, join using session password', category='success')
@@ -57,23 +58,30 @@ def join_page():
 @login_required
 def game_page():
     if request.method == 'POST':
-        pname = request.form.get('pname')
-        holenum = int(request.form.get('holenum'))
-        newscore = int(request.form.get('score'))
 
-        p_exists = User.query.filter_by(id=current_user.id).first()
-        if p_exists:
-            if not p_exists.score:
-                p_exists.holenum = holenum
-                p_exists.score = newscore
-                db.session.commit()
-            else:
-                overall = newscore + p_exists.score
-                p_exists.holenum = holenum
-                p_exists.score = overall
-                db.session.commit()
+        hn = request.form.get('holenum')
+        ns = request.form.get('score')
+        print('HN:'+hn)
+        print('NS:'+ns)
+
+        if ns =="" or hn == "":
+            flash('Enter a score and hole number', category='error')
         else:
-            flash('Player name not in session', category='error')
+            holenum = int(hn)
+            newscore = int(ns)
+            p_exists = User.query.filter_by(id=current_user.id).first()
+            if p_exists:
+                if not p_exists.score:
+                    p_exists.holenum = holenum
+                    p_exists.score = newscore
+                    db.session.commit()
+                else:
+                    overall = newscore + p_exists.score
+                    p_exists.holenum = holenum
+                    p_exists.score = overall
+                    db.session.commit()
+            else:
+                flash('Player name not in session', category='error')
 
     players = User.query.all()
     return render_template('game.html', players=players)
