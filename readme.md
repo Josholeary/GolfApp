@@ -7,6 +7,9 @@ This web app built using the python 'flask' web framework acts as a group scorec
 
 ## Current State:
 
+### Game
+![Game](ss/Game.png)
+
 ### Home
 ![Home](ss/Home.png)
 
@@ -16,6 +19,4 @@ This web app built using the python 'flask' web framework acts as a group scorec
 ### Join
 ![Join](ss/Join.png)
 
-### Game
-![Game](ss/Game.png)
 
